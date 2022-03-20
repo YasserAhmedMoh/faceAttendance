@@ -1,1 +1,1 @@
-web: gunicorn cloud.wsgi --log-file -
+web: gunicorn faceAttendance.wsgi --log-file -
