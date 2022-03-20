@@ -10,11 +10,13 @@ from django.contrib import messages
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
 import datetime
+from django.contrib.auth.decorators import login_required
 
 
 
 
 # Create your views here.
+@login_required
 def home(request):
     stu = addStudent.objects.all()
     cou = Courses.objects.all()
@@ -60,7 +62,7 @@ def login_page(request):
     context = {}
     return render(request, "attendance_app/login.html", context)
     
-
+@login_required
 def attendance(request):
     merge_data = student_with_course.objects.all()
     course_name = Courses.objects.all()
@@ -76,7 +78,7 @@ def attendance(request):
 #def attendance_save(request):
     
 
-
+@login_required
 def Students(request):
     student_count=addStudent.objects.count()
     course_count=Courses.objects.count()
@@ -86,11 +88,11 @@ def Students(request):
     return render(request, "attendance_app/Students.html",{"student_count":student_count ,"course_count":course_count,"student_data":student_data  })
 
 
-
+@login_required
 def add_course(request):
     return render(request, "attendance_app/add_course.html")
 
-
+@login_required
 def add_course_save(request):
     if request.method!="POST":
         return HttpResponse("Method Not Allowed")
@@ -110,11 +112,11 @@ def add_course_save(request):
             messages.error(request,"Failed To Add Course")
             return HttpResponseRedirect(reverse("add_course"))
 
-
+@login_required
 def add_student(request):
     return render(request, "attendance_app/add_student.html")
 
-
+@login_required
 def add_student_save(request):
     if request.method!="POST":
         return HttpResponse("Method Not Allowed")
@@ -135,13 +137,14 @@ def add_student_save(request):
             messages.error(request,"Failed To Add Student")
             return HttpResponseRedirect(reverse("add_student"))
 
-
+@login_required
 def merge(request):
     stu = addStudent.objects.all()
     cou = Courses.objects.all()
     s_c = student_with_course.objects.all().order_by("student_name")
     return render(request, "attendance_app/merge.html",{"stu":stu, "cou":cou,"s_c":s_c})
-
+    
+@login_required
 def merge_save(request):
     #stu = addStudent.objects.all()
     #cou = Courses.objects.all()
