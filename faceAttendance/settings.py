@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-tj7$3(+ww7t7hc!f#o(c1-^$g$rgbe$lv@)0#d(0qqvr#=lc#b
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['127.0.0.1','faceattendance.herokuapp.com']
+ALLOWED_HOSTS = ['127.0.0.1','faceattendance1.herokuapp.com']
 
 
 # Application definition
