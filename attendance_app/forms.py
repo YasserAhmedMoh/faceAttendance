@@ -1,11 +1,12 @@
 from django import forms
-from .models import  PhotoGallary
+from attendance_app.models import *
 
-class ImageForm(forms.ModelForm):
+class DocumentForm(forms.ModelForm):
     class Meta:
-        model = PhotoGallary
-        fields=['multipleimages']  
-        label ={}
-        widgets ={
-            'multipleimages':forms.FileInput(attrs={'id':'myfile','class':'form-control-file','multiple':True}),
-        } 
+        model = Images
+        fields = ('document', )
+
+class VideoForm(forms.ModelForm):
+    class Meta:
+        model = Upload_Video
+        fields = ('upload_Video', )

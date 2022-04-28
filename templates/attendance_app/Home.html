@@ -62,7 +62,7 @@
                   
                 </div>
                 <div class="p-4 align-self-end">
-                    You can upload a picture of the students to take the attendance for them, or you can open the camera to take a picture while you are in class to determine the attendance.
+                    You can upload a video of the students to take the attendance for them, or you can open the camera to take a picture while you are in class to determine the attendance.
 
                 </div>
               </div>
@@ -75,16 +75,21 @@
                   <div class="row">
                     <div class="col text-center">
                       <div class="py-5">
-                        <h2 class="display-5">Upload a photo</h2>
+                        <h2 class="display-5">Upload Video</h2>
                         <div class="row">
                         <div class="col-lg-3"> </div>
                         <div class="col-lg-12">
-                        <input class="btn btn-outline-primary btn-block" type="file" accept="image/*" />
+                          <form method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            
+                            {{ form.as_p }}
+                            <button type="submit">Upload</button>
+                          </form>
                         </div>
                     </div>
                     <div class="py-3">
 
-
+<!--
      <form method="POST" action="">
       {% csrf_token %}
                   
@@ -101,7 +106,7 @@
                         <option value="{{ option }}" >{{ option }}</option>
                         {% endfor %}
                       </select>
-                    <!--
+                    
                      <br>
                       <label>Week number </label></br>
                       
@@ -133,14 +138,14 @@
                       <input type="radio" id="10" name="week_number" value="10"> <label for="html">10</label>
                       <input type="radio" id="11" name="week_number" value="11"> <label for="html">11</label>
                       <input type="radio" id="12" name="week_number" value="12"> <label for="html">12</label>
-        -->
+        
                       <div class="py-3">
                       <div class="card-footer">
                         <button type="submit" class="btn btn-primary btn-block">Add Attendance</button>
                       </div>
             
                     </form>   
-                    
+                    -->
             
                       </div>
                     </div>

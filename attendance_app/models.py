@@ -10,14 +10,14 @@ from django.dispatch import receiver
 class Courses(models.Model):
     id=models.AutoField(primary_key=True)
     course_name=models.CharField(max_length=255)
-    course_code=models.CharField(max_length=255)
+    
     grade_n = models.CharField(max_length=255)
     created_at=models.DateTimeField(auto_now_add=True)
     updated_at=models.DateTimeField(auto_now_add=True)
     objects=models.Manager()
 
     def __str__(self):
-     return '{} ({})'.format(self.course_name, self.course_code)
+     return '{}'.format(self.course_name)
      # return self.course_name
     
 
@@ -28,7 +28,7 @@ class addStudent(models.Model):
    # session_year_id=models.ForeignKey(SessionYearModel,on_delete=models.CASCADE)
     id=models.AutoField(primary_key=True)
     student_name=models.CharField(max_length=255, default="")
-    student_id=models.CharField(max_length=255, default="")
+    
     grade_n = models.CharField(max_length=255)
     created_at=models.DateTimeField(auto_now_add=True)
     updated_at=models.DateTimeField(auto_now_add=True)
@@ -36,7 +36,7 @@ class addStudent(models.Model):
 
     
     def __str__(self):
-        return '{} ({})'.format(self.student_name, self.student_id)
+        return '{}'.format(self.student_name)
         #return self.student_name
 
    
@@ -61,6 +61,14 @@ class student_with_course(models.Model):
 
     
   #  if(course_id.grade_n== student_id.grade_n):
+
+
+class Images(models.Model):
+    
+    document = models.FileField(upload_to='images/')
+
+class Upload_Video(models.Model):
+    upload_Video = models.FileField(upload_to='video/')
 
     
 

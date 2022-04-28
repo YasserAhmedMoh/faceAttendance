@@ -61,7 +61,7 @@
                 </div>
                 <!-- /.card-header -->
                 <!-- form start -->
-                <form role="form" action="/add_student_save/" method="POST">
+                <form role="form" action="/add_student_save/" method="POST" >
                     {% csrf_token %}
                   <div class="card-body">
                     <div class="form-group">
@@ -69,8 +69,7 @@
                       <label>student Name </label>
                       <input require type="text" class="form-control" name="student" placeholder="Enter name">
 
-                      <label>student ID </label>
-                      <input require type="text" class="form-control" name="student_id" placeholder="Enter name" require>
+                      
                       
 
                       <label >Choose year:</label><br>
@@ -79,6 +78,9 @@
                     <input type="radio" id="2" name="grade" value="2"> <label for="html">2</label>
                     <input type="radio" id="3" name="grade" value="3"> <label for="html">3</label>
                     <input type="radio" id="4" name="grade" value="4"> <label for="html">4</label>
+
+                    
+                   
                       
                     </div>
                      <div class="form-group">

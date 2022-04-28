@@ -12,7 +12,10 @@ from django.urls import reverse
 import datetime
 from django.contrib.auth.decorators import login_required
 
-
+from django.core.files.storage import FileSystemStorage
+from django.conf import settings
+from attendance_app.forms import *
+#from attendance_app.Smart_Attendence_System.add_students import add
 
 
 # Create your views here.
@@ -28,20 +31,34 @@ def home(request):
         'dat' : date ,
         'tim' : time ,
     }
+    
+    #custom_model = add(first_time=True)
+    
+
     if request.method == "POST":
         student=request.POST.get('student')
         course=request.POST.get('course')
         
        # week_number=request.POST.get('week_number')
        # student_with_course.objects.filter(student_name=student,course_name=course).save(week1=1)
-        s_w_c_model=student_with_course.objects.get(student_name=student,course_name=course)
+        #s_w_c_model=student_with_course.objects.get(student_name=student,course_name=course)
         
-        s_w_c_model.date_txt += datetime.datetime.now().strftime("%Y-%m-%d %H:%M") + " , " 
-        s_w_c_model.week1 +=1
-        s_w_c_model.save()
-        return render(request, "attendance_app/Home.html",{"stu":stu, "cou":cou})
+        #s_w_c_model.date_txt += datetime.datetime.now().strftime("%Y-%m-%d ") + " , " 
+        #s_w_c_model.week1 +=1
+        #s_w_c_model.save()
+        
 
-    return render(request, "attendance_app/Home.html",{"stu":stu, "cou":cou})
+        form = VideoForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('home')
+    else:
+        form = DocumentForm()
+
+        
+        #return render(request, "attendance_app/Home.html",{"stu":stu, "cou":cou})
+    #return render(request, "attendance_app/Home.html",{"stu":stu, "cou":cou})
+    return render(request, "attendance_app/Home.html",{"form":form})
 
 
 
@@ -82,10 +99,18 @@ def attendance(request):
 def Students(request):
     student_count=addStudent.objects.count()
     course_count=Courses.objects.count()
+    student_data = addStudent.objects.all()
+    if request.method == 'POST':
+        form = DocumentForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('Students')
+    else:
+        form = DocumentForm()
   #  get_grade=request.POST.get("apear_by_grade")
   #  student_data = addStudent.objects.filter(grade_n=get_grade)
-    student_data = addStudent.objects.all()
-    return render(request, "attendance_app/Students.html",{"student_count":student_count ,"course_count":course_count,"student_data":student_data  })
+    
+    return render(request, "attendance_app/Students.html",{"student_count":student_count ,"course_count":course_count,"student_data":student_data, 'form': form  })
 
 
 @login_required
@@ -98,12 +123,12 @@ def add_course_save(request):
         return HttpResponse("Method Not Allowed")
     else:
         course=request.POST.get("course")
-        coursecode=request.POST.get("course_code")
+        
         grade=request.POST.get("grade")
         
         try:
             
-            course_model=Courses(course_name=course, grade_n=grade,course_code=coursecode)
+            course_model=Courses(course_name=course, grade_n=grade)
             course_model.save()
             messages.success(request,"Successfully Added Course")
             return HttpResponseRedirect(reverse("add_course"))
@@ -122,13 +147,26 @@ def add_student_save(request):
         return HttpResponse("Method Not Allowed")
     else:
         student=request.POST.get("student")
-        studentid=request.POST.get("student_id")
+        
         grade=request.POST.get("grade")
+        
+        
         #images = request.FILES.getlist('images')
         try:
             
-            student_model=addStudent(student_name=student , grade_n=grade,student_id=studentid)
+            student_model=addStudent(student_name=student , grade_n=grade)
             student_model.save()
+
+            #photo_model=photos(File=request.FILES.get('images'))
+            #photo_model.save()
+            #for f in file_images:
+            #    photoname=f.name.rsplit('.', 1)[0]
+            #    photos.objects.create(name=student,File=f)
+                
+                #fss = FileSystemStorage()
+                #filename = fss.save(getfile.name, getfile)
+                #uploaded_file_url = fss.url(filename)
+            
             
             messages.success(request,"Successfully Added Student")
             return HttpResponseRedirect(reverse("add_student"))

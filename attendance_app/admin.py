@@ -5,6 +5,6 @@ from attendance_app.models import *
 
 admin.site.register(Courses)
 admin.site.register(addStudent)
-admin.site.register(student_with_course)
-
+admin.site.register(Images )
+admin.site.register(Upload_Video )
 
